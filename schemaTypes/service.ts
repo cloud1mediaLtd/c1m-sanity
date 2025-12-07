@@ -84,6 +84,34 @@ export const service = defineType({
       description: 'Rich content for the service detail page',
     }),
     defineField({
+      name: 'subServices',
+      title: 'Sub-Services',
+      type: 'array',
+      description: 'Quick links to related sub-services (e.g., Logo Design, Brand Guidelines)',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'link',
+              title: 'Link',
+              type: 'string',
+              description: 'Internal path or external URL',
+            }),
+          ],
+          preview: {
+            select: {title: 'name'},
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'cta',
       title: 'Call to Action',
       type: 'object',
