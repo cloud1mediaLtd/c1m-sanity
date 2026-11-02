@@ -8,7 +8,8 @@ const contentTypes = [
 
 export const structure: StructureResolver = S => S.list().title('Editorial').items([
   S.listItem().title('Content by site').child(
-    S.documentTypeList('site').title('Choose a site').child(siteId =>
+    S.documentTypeList('site').title('Choose a site')
+      .filter('_type == "site" && _id in path("*")').child(siteId =>
       S.list().title('Site content').items([
         ...contentTypes.map(([type, title]) => S.listItem().title(title).child(
           S.documentList().title(title).schemaType(type)

@@ -1,6 +1,6 @@
 # Shared editorial CMS
 
-Status: local foundation, not deployed. Owner: Site Delivery. Reviewed: 2026-11-02.
+Status: Studio deployed; guide frontend cutover in progress. Owner: Site Delivery. Reviewed: 2026-11-02.
 Canonical repository: cloud1mediaLtd/c1m-sanity. Historical copies are untouched.
 
 Use Node 24, `pnpm install --frozen-lockfile`, then `pnpm dev` (loopback 3333).
@@ -9,7 +9,7 @@ editor: use the checked-in JSON fixtures for credential-free content rehearsals.
 `pnpm verify` checks new schemas and all TypeScript; `pnpm build` builds Studio.
 The existing older schema lint baseline is not silently weakened or rewritten.
 
-Sites: cloud1media and simplevan. Copy records have fixed fields and layouts;
+Sites: cloud1media, simplevan and greatremovals. Copy records have fixed fields and layouts;
 booking, prices, CRM and authorization are not CMS content. Site references are
 required; slug uniqueness and document references are checked within the site.
 Authors and assets are shared. External customer editing is not supported.
@@ -48,3 +48,27 @@ Images are listed for separate review/upload, never fabricated as CMS assets.
 Publication dates are not invented. Review media, SEO, links and dates before
 any separately authorized hosted import/publication. Existing website routes
 stay code-backed until a deliberate tested cutover.
+
+## Production rollout tools
+
+The Studio is hosted at https://c1media.sanity.studio/ in project `g2dro3ti`,
+dataset `production`. `sanity.cli.ts` pins its existing application ID.
+Production data backups and generated plans stay outside Git.
+
+`node scripts/plan-site-backfill.mjs export.ndjson` plans revision-guarded
+company ownership and legacy article-category copies. Existing legacy categories
+are preserved. All new public IDs and references must use root IDs without dots;
+Sanity treats dotted IDs as private. The regression suite checks this boundary.
+
+After separate migration approval, an authenticated operator can apply a reviewed
+plan with `sanity exec scripts/apply-reviewed-plan.ts --with-user-token --
+PLAN --apply-g2dro3ti-production`. This runner allows conditional creates and
+revision-guarded patches only. Never feed an unreviewed plan into it.
+
+`sanity exec scripts/publish-imported-guides.ts --with-user-token --
+SITES_ROOT --apply-g2dro3ti-production` publishes the six reviewed baseline
+guides and uploads their existing images. Unlike the offline draft planner, this
+is an explicitly authorized publication tool. It uses conditional creates,
+skips existing articles and never replaces or deletes content. The source root
+must contain the two commissioned site checkouts and their public image files.
+Deploy the company frontend's site filters before publishing other sites' content.

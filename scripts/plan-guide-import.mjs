@@ -8,16 +8,18 @@ export function planGuideImport(documents, sources) {
   for(const {siteKey,guides} of sources){
     const sites=documents.filter(d=>d._type==='site'&&d.key===siteKey&&!d._id.startsWith('drafts.'));
     if(sites.length>1)throw Error(`Duplicate site key: ${siteKey}`);
-    const site=sites[0]?._id??`site.${siteKey}`;
+    if(sites[0]?._id.includes('.'))throw Error('Site ID is private; repair it before public import');
+    const site=sites[0]?._id??`site-${siteKey}`;
     const categories=documents.filter(d=>d._type==='articleCategory'&&d.site?._ref===site&&d.slug?.current==='guide'&&!d._id.startsWith('drafts.'));
     if(categories.length>1)throw Error(`Duplicate Guide category for ${siteKey}`);
     if(!categories.length&&documents.some(d=>d._type==='articleCategory'&&d.site?._ref===site&&d.slug?.current==='guide'&&d._id.startsWith('drafts.')))throw Error(`Review the existing draft Guide category for ${siteKey} before importing`);
-    const category=categories[0]?._id??`category.${siteKey}.guide`;
+    if(categories[0]?._id.includes('.'))throw Error('Category ID is private; repair it before public import');
+    const category=categories[0]?._id??`category-${siteKey}-guide`;
     if(!documents.some(d=>d._id===site))mutations.push({createIfNotExists:{_id:site,_type:'site',key:siteKey,title:siteKey==='simplevan'?'SimpleVan':'Great Removals'}});
     if(!categories.length)mutations.push({createIfNotExists:{_id:category,_type:'articleCategory',site:{_type:'reference',_ref:site},name:'Guide',slug:{_type:'slug',current:'guide'}}});
     for(const guide of guides){
       if(documents.some(d=>d._type==='post'&&d.site?._ref===site&&d.slug?.current===guide.slug))continue;
-      const id=`drafts.article.${siteKey}.${guide.slug}`;
+      const id=`drafts.article-${siteKey}-${guide.slug}`;
       const content=[];
       const block=(text,style='normal',listItem)=>{const key=`block-${content.length}`;content.push({_type:'block',_key:key,style,markDefs:[],children:[{_type:'span',_key:`${key}-text`,text,marks:[]}],...(listItem?{listItem,level:1}:{})})};
       for(const section of guide.sections){block(section.heading,'h2');section.paragraphs.forEach(text=>block(text));section.checklist?.forEach(text=>block(text,'normal','bullet'));}
