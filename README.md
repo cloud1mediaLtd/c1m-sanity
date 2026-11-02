@@ -24,3 +24,27 @@ Deploy the company's site-filtered queries after its backfill and before
 publishing another site's content. The shared site-content package must be
 published before registry-only site consumers can adopt it. Hosted writes,
 package publication and deployments need separate authorization.
+
+## Articles and guides
+
+The existing `post` document is labelled **Article** in Studio. Its existing
+Article Category reference is the taxonomy: use category slug `guide` for guides.
+There is no duplicate Guide document type or parallel label system. Internal
+editors choose a site under **Content by site**, then Articles or Article
+categories; new records inherit that site. Newly created sites appear there
+without editing the Studio menu. Existing authors and media stay shared.
+
+Articles have rich text, featured media, excerpt, category and SEO fields.
+A future publication date keeps a published article out of the new reader's
+public feed until that time. Service documents remain available as existing
+infrastructure; no service-page or design cutover is included.
+
+`pnpm demo:articles` produces a credential-free offline import plan for the
+existing SimpleVan and Great Removals guides. `pnpm articles:plan export.ndjson`
+checks a real export without making changes. Existing guide titles, slugs,
+paragraphs and checklists become draft articles, linked to each site's Guide
+category. Existing site/slug matches are not overwritten; the plan is idempotent.
+Images are listed for separate review/upload, never fabricated as CMS assets.
+Publication dates are not invented. Review media, SEO, links and dates before
+any separately authorized hosted import/publication. Existing website routes
+stay code-backed until a deliberate tested cutover.

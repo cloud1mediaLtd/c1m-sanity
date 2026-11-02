@@ -16,5 +16,10 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+    templates: previous => [...previous, ...['post','articleCategory','page','project','projectCategory','service','announcementBar'].map(type => ({
+      id: `${type}-for-site`, title: `New ${type} for this site`, schemaType: type,
+      parameters: [{name: 'siteId', type: 'string'}],
+      value: ({siteId}: {siteId: string}) => ({site: {_type: 'reference', _ref: siteId}}),
+    }))],
   },
 })

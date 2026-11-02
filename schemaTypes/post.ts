@@ -3,7 +3,7 @@ import {defineField, defineType} from 'sanity'
 
 export const post = defineType({
   name: 'post',
-  title: 'Blog Post',
+  title: 'Article',
   type: 'document',
   validation: rule=>rule.custom(sameSiteReferences),
   fields: [
@@ -46,11 +46,14 @@ export const post = defineType({
       title: 'Category',
       type: 'reference',
       to: [{type: 'articleCategory'}],
+      description: 'Use an existing category such as Guide. Guides are articles, not a separate content type.',
+      options: {filter: ({document}) => {const site=(document.site as {_ref?:string}|undefined)?._ref;return {filter: 'site._ref == $site', params: {site: site ?? ''}}}},
     }),
     defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
+      validation: rule => rule.required().min(1),
       of: [
         {type: 'block'},
         {
@@ -79,7 +82,9 @@ export const post = defineType({
     }),
     defineField({
       name: 'publishedAt',
-      title: 'Published At',
+      title: 'Publication date',
+      description: 'A future date keeps the published article out of public feeds until that time.',
+      initialValue: () => new Date().toISOString(),
       type: 'datetime',
     }),
     defineField({
@@ -89,12 +94,19 @@ export const post = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'seo', title: 'Search appearance', type: 'object', fields: [
+        defineField({name: 'metaTitle', title: 'Search title', type: 'string'}),
+        defineField({name: 'metaDescription', title: 'Search description', type: 'text', rows: 3}),
+      ],
+    }),
+    defineField({
       name: 'githubUrl',
       title: 'GitHub Repository',
       type: 'url',
       description: 'Link to the GitHub repository (for product/plugin posts)',
     }),
   ],
+    // Layout remains owned by each site; SEO is editorial content.
   preview: {
     select: {
       title: 'title',
