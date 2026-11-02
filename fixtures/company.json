@@ -1,0 +1,25 @@
+{
+  "name": "Cloud1 Media",
+  "headline": "Websites, marketing and practical software.",
+  "summary": "We help businesses build their online presence and improve the way they work. Start with a useful website, get support with your marketing, and connect the tools your business needs as it grows.",
+  "services": [
+    {
+      "title": "Website design and development",
+      "description": "A clear, useful website shaped around your customers. We can start with a focused site and customise it as your business changes."
+    },
+    {
+      "title": "SEO and marketing",
+      "description": "Help with search content, local visibility, social media and the materials you use to promote your business online and in print."
+    },
+    {
+      "title": "Software and integrations",
+      "description": "Connect your website to the tools you use for enquiries and everyday work. We agree the scope and available integrations before starting."
+    }
+  ],
+  "software": {
+    "title": "SaaSDash, our software project.",
+    "ownership": "SaaSDash is owned and developed by Cloud1 Media.",
+    "description": "We are building shared software foundations for focused business products, including SimpleVan. The aim is simple: give each business the tools it needs and a clear way to handle everyday work.",
+    "availability": "SaaSDash is in development. Availability and scope are agreed for each product or pilot."
+  }
+}

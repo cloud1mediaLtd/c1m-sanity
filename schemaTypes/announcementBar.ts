@@ -1,10 +1,13 @@
+import {siteField, sameSiteReferences} from './ownership'
 import {defineField, defineType} from 'sanity'
 
 export const announcementBar = defineType({
   name: 'announcementBar',
   title: 'Announcement Bar',
   type: 'document',
+  validation: rule=>rule.custom(sameSiteReferences),
   fields: [
+    siteField,
     defineField({
       name: 'active',
       title: 'Active',

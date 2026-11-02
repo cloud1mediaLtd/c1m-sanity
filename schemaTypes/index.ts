@@ -1,3 +1,5 @@
+import {site} from './site'
+import {marketingCopy} from './marketingCopy'
 import {post} from './post'
 import {articleCategory} from './articleCategory'
 import {projectCategory} from './projectCategory'
@@ -7,7 +9,7 @@ import {service} from './service'
 import {page} from './page'
 import {announcementBar} from './announcementBar'
 
-export const schemaTypes = [
+export const schemaTypes = [site, ...marketingCopy,
   // Content Types
   post,
   articleCategory,

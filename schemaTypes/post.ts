@@ -1,10 +1,13 @@
+import {siteField, uniqueSiteSlug, sameSiteReferences} from './ownership'
 import {defineField, defineType} from 'sanity'
 
 export const post = defineType({
   name: 'post',
   title: 'Blog Post',
   type: 'document',
+  validation: rule=>rule.custom(sameSiteReferences),
   fields: [
+    siteField,
     defineField({
       name: 'title',
       title: 'Title',
@@ -15,7 +18,7 @@ export const post = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title', maxLength: 96},
+      options: {isUnique: uniqueSiteSlug,source: 'title', maxLength: 96},
       validation: (rule) => rule.required(),
     }),
     defineField({

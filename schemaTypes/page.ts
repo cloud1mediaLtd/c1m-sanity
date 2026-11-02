@@ -1,3 +1,4 @@
+import {siteField, uniqueSiteSlug, sameSiteReferences} from './ownership'
 import {defineField, defineType, defineArrayMember} from 'sanity'
 
 // Reusable rich text configuration
@@ -25,6 +26,7 @@ const richText = {
             type: 'object',
             title: 'Link',
             fields: [
+    siteField,
               {
                 name: 'href',
                 type: 'url',
@@ -47,6 +49,7 @@ export const page = defineType({
   name: 'page',
   title: 'Page',
   type: 'document',
+  validation: rule=>rule.custom(sameSiteReferences),
   groups: [
     {name: 'content', title: 'Content'},
     {name: 'seo', title: 'SEO'},
@@ -65,7 +68,7 @@ export const page = defineType({
       type: 'slug',
       group: 'content',
       description: 'URL path for this page (e.g., "about" or "terms/conditions")',
-      options: {
+      options: {isUnique: uniqueSiteSlug,
         source: 'title',
         maxLength: 200,
       },

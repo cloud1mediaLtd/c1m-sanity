@@ -5,11 +5,17 @@
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "sanity dev",
+    "dev": "sanity dev --host 127.0.0.1 --port 3333",
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint schemaTypes/site.ts schemaTypes/ownership.ts schemaTypes/marketingCopy.ts schemaTypes/validateCopy.ts structure.ts",
+    "verify": "pnpm lint && pnpm type-check && pnpm test",
+    "migration:plan": "node scripts/plan-migration.mjs",
+    "test": "node --test scripts/plan-migration.test.mjs",
+    "demo": "node scripts/plan-migration.mjs fixtures/export.ndjson"
   },
   "keywords": [
     "sanity"
@@ -39,5 +45,9 @@
     "overrides": {
       "glob": ">=10.5.0"
     }
+  },
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": "24.x"
   }
 }

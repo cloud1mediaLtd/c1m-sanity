@@ -1,0 +1,40 @@
+{
+  "title": "Websites and marketing for man-and-van businesses",
+  "summary": "Get a website that explains your services, shows where you work and gives customers a clear way to enquire. SimpleVan also offers SEO, marketing and social media support, with connected tools to help you manage enquiries.",
+  "services": [
+    {
+      "id": "websites",
+      "title": "Website design and customisation",
+      "description": "Start with our website template or choose a design tailored to your business. We can help with your branding, service pages and individual changes, with the work agreed before we start."
+    },
+    {
+      "id": "seo",
+      "title": "SEO and local visibility",
+      "description": "Make your services and coverage areas easier to understand. We can review your website and improve its structure, service descriptions and local content for people searching for a man and van."
+    },
+    {
+      "id": "marketing",
+      "title": "Marketing and social media",
+      "description": "Keep your message consistent across your website, campaigns and social profiles. Get help with content, campaign pages and social media, for a specific project or ongoing support."
+    }
+  ],
+  "workspace": {
+    "title": "Your website and enquiries, connected",
+    "description": "A SimpleVan-designed website can connect to your provider workspace, helping you keep customer enquiries and follow-up together. You can also explore platform plans for your business profile and directory presence.",
+    "note": "Website and marketing services are agreed separately from platform subscriptions. We will confirm the tools and connections available for your project."
+  },
+  "steps": [
+    {
+      "title": "Tell us what you need",
+      "description": "A new website, a refresh or help promoting your business."
+    },
+    {
+      "title": "Agree the work",
+      "description": "We discuss the design, content, connections and cost with you."
+    },
+    {
+      "title": "Build from there",
+      "description": "Start with the essentials and add support when you need it."
+    }
+  ]
+}
