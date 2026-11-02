@@ -6,7 +6,9 @@ import {resolve} from 'node:path'
 export function planSiteBackfill(documents) {
   const mutations = []
   const owned = new Set(['page', 'post', 'service', 'project', 'articleCategory', 'projectCategory', 'announcementBar'])
-  const sites = documents.filter(d => d._type === 'site' && d.key === 'cloud1media' && !d._id.startsWith('drafts.'))
+  const matches = documents.filter(d => d._type === 'site' && d.key === 'cloud1media' && !d._id.startsWith('drafts.'))
+  const sites = matches.filter(d => !d._id.includes('.'))
+  if (!sites.length && matches.length) throw Error('Site ID is private; repair it before backfill')
   if (sites.length > 1) throw Error('Duplicate cloud1media site')
   if (sites[0]?._id.includes('.')) throw Error('Site ID is private; repair it before backfill')
   const site = sites[0]?._id ?? 'site-cloud1media'

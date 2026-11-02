@@ -12,3 +12,9 @@ test('migrated records and other sites remain unchanged',()=>{
  const docs=[{_id:'company',_type:'site',key:'cloud1media'},{_id:'old',_type:'post',site:{_ref:'company'}},{_id:'van',_type:'post',site:{_ref:'site.simplevan'}}]
  assert.equal(planSiteBackfill(docs).mutations.length,0)
 })
+
+test('retained private repair records do not make a completed backfill ambiguous',()=>{
+ const docs=[{_id:'site-cloud1media',_type:'site',key:'cloud1media'},{_id:'site.cloud1media',_type:'site',key:'cloud1media'}];
+ assert.equal(planSiteBackfill(docs).mutations.length,0);
+ assert.throws(()=>planSiteBackfill(docs.slice(1)),/private/);
+});
