@@ -1,6 +1,6 @@
 # Shared editorial CMS
 
-Status: Studio deployed; guide frontend cutover in progress. Owner: Site Delivery. Reviewed: 2026-11-02.
+Status: Studio and guide pilot deployed; Great Removals custom-domain cutover pending. Owner: Site Delivery. Reviewed: 2026-11-02.
 Canonical repository: cloud1mediaLtd/c1m-sanity. Historical copies are untouched.
 
 Use Node 24, `pnpm install --frozen-lockfile`, then `pnpm dev` (loopback 3333).
